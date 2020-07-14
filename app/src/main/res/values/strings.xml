@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Voice Memos</string>
+    <string name="button_start">Let\'s Start!</string>
+    <string name="app_description">This is an application to record, save and open voice memos</string>
+    <string name="record_header">Record</string>
+    <string name="record_subheading">To start recording your voice memo, press and hold the \"Record\" button below</string>
+</resources>
