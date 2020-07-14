@@ -4,4 +4,7 @@
     <string name="app_description">This is an application to record, save and open voice memos</string>
     <string name="record_header">Record</string>
     <string name="record_subheading">To start recording your voice memo, press and hold the \"Record\" button below</string>
+    <string name="record_stop">Stop Recording</string>
+    <string name="recordplaying_start">Start Playing Recording</string>
+    <string name="recordplaying_stop">Stop Playing Recording</string>
 </resources>

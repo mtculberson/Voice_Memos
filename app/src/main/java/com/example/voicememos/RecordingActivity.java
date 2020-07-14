@@ -45,9 +45,9 @@ public class RecordingActivity extends AppCompatActivity {
         buttonPlayLastRecordAudio = (Button) findViewById(R.id.button3);
         buttonStopPlayingRecording = (Button)findViewById(R.id.button4);
 
-        buttonStop.setEnabled(false);
-        buttonPlayLastRecordAudio.setEnabled(false);
-        buttonStopPlayingRecording.setEnabled(false);
+        buttonStop.setVisibility(View.INVISIBLE);
+        buttonPlayLastRecordAudio.setVisibility(View.INVISIBLE);
+        buttonStopPlayingRecording.setVisibility(View.INVISIBLE);
 
         random = new Random();
 
@@ -74,8 +74,8 @@ public class RecordingActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    buttonStart.setEnabled(false);
-                    buttonStop.setEnabled(true);
+                    buttonStart.setVisibility(View.INVISIBLE);
+                    buttonStop.setVisibility(View.VISIBLE);
 
                     Toast.makeText(RecordingActivity.this, "Recording started",
                             Toast.LENGTH_LONG).show();
@@ -90,10 +90,10 @@ public class RecordingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mediaRecorder.stop();
-                buttonStop.setEnabled(false);
-                buttonPlayLastRecordAudio.setEnabled(true);
-                buttonStart.setEnabled(true);
-                buttonStopPlayingRecording.setEnabled(false);
+                buttonStop.setVisibility(View.INVISIBLE);
+                buttonPlayLastRecordAudio.setVisibility(View.VISIBLE);
+                buttonStart.setVisibility(View.VISIBLE);
+                buttonStopPlayingRecording.setVisibility(View.INVISIBLE);
 
                 Toast.makeText(RecordingActivity.this, "Recording Completed",
                         Toast.LENGTH_LONG).show();
@@ -105,9 +105,9 @@ public class RecordingActivity extends AppCompatActivity {
             public void onClick(View view) throws IllegalArgumentException,
                     SecurityException, IllegalStateException {
 
-                buttonStop.setEnabled(false);
-                buttonStart.setEnabled(false);
-                buttonStopPlayingRecording.setEnabled(true);
+                buttonStop.setVisibility(View.INVISIBLE);
+                buttonStart.setVisibility(View.INVISIBLE);
+                buttonStopPlayingRecording.setVisibility(View.VISIBLE);
 
                 mediaPlayer = new MediaPlayer();
                 try {
@@ -126,10 +126,10 @@ public class RecordingActivity extends AppCompatActivity {
         buttonStopPlayingRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttonStop.setEnabled(false);
-                buttonStart.setEnabled(true);
-                buttonStopPlayingRecording.setEnabled(false);
-                buttonPlayLastRecordAudio.setEnabled(true);
+                buttonStop.setVisibility(View.INVISIBLE);
+                buttonStart.setVisibility(View.VISIBLE);
+                buttonStopPlayingRecording.setVisibility(View.INVISIBLE);
+                buttonPlayLastRecordAudio.setVisibility(View.INVISIBLE);
 
                 if(mediaPlayer != null){
                     mediaPlayer.stop();

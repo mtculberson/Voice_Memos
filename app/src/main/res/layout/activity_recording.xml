@@ -1,44 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#E2d7e5">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Record"
         android:id="@+id/button"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="37dp"
-        />
+        android:layout_width="206dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="16dp"
+        android:background="#C3ABC9"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:text="@string/record_header"
+        android:textColor="#f9f7f9"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="STOP"
-        android:id="@+id/button2"
-        android:layout_alignTop="@+id/button"
-        android:layout_centerHorizontal="true"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Play"
-        android:id="@+id/button3"
-        android:layout_alignTop="@+id/button2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="STOP PLAYING RECORDING "
         android:id="@+id/button4"
-        android:layout_below="@+id/button2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        />
-</RelativeLayout>
+        android:layout_width="206dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="20dp"
+        android:background="#C3ABC9"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:text="@string/recordplaying_stop"
+        android:textColor="#f9f7f9"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="223dp"
+        android:layout_height="79dp"
+        android:fontFamily="@font/roboto_mono_italic"
+        android:gravity="center_horizontal"
+        android:text="@string/record_subheading"
+        android:textColor="#32003A"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="206dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="20dp"
+        android:background="#C3ABC9"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:text="@string/record_stop"
+        android:textColor="#f9f7f9"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="206dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="20dp"
+        android:background="#C3ABC9"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:text="@string/recordplaying_start"
+        android:textColor="#f9f7f9"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="312dp"
+        android:layout_height="95dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:gravity="center|center_horizontal"
+        android:text="@string/record_header"
+        android:textColor="#81528d"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/record_header" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
