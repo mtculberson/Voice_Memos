@@ -24,20 +24,20 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button2"
         android:layout_width="206dp"
         android:layout_height="69dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="#C3ABC9"
         android:fontFamily="@font/roboto_mono_medium"
-        android:text="@string/recordplaying_stop"
+        android:text="@string/record_stop"
         android:textColor="#f9f7f9"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -52,36 +52,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="206dp"
-        android:layout_height="69dp"
-        android:layout_marginTop="20dp"
-        android:background="#C3ABC9"
-        android:fontFamily="@font/roboto_mono_medium"
-        android:text="@string/record_stop"
-        android:textColor="#f9f7f9"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="206dp"
-        android:layout_height="69dp"
-        android:layout_marginTop="20dp"
-        android:background="#C3ABC9"
-        android:fontFamily="@font/roboto_mono_medium"
-        android:text="@string/recordplaying_start"
-        android:textColor="#f9f7f9"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
     <TextView
         android:id="@+id/textView3"
@@ -98,5 +68,97 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/record_header" />
 
+    <Button
+        android:id="@+id/newRecordingButton"
+        android:layout_width="206dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="56dp"
+        android:background="#C3ABC9"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:text="@string/record_new"
+        android:textColor="#f9f7f9"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSname"
+        app:layout_constraintVertical_bias="0.338" />
+
+    <SeekBar
+        android:id="@+id/sBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/txtStartTime"
+        android:clickable="true"
+        android:theme="@style/SeekBarColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtStartTime"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/txtSname"
+        android:layout_width="397dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sBar"
+        app:layout_constraintVertical_bias="0.003" />
+
+    <TextView
+        android:id="@+id/txtStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/sBar"
+        android:text="0 min, 0 sec"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.268" />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="103dp"
+        android:layout_height="75dp"
+        android:background="#C3ABC9"
+        android:contentDescription="@string/recordplaying_start"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:text="@string/recordplaying_start"
+        android:textColor="#f9f7f9"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.034"
+        app:srcCompat="@android:drawable/ic_media_play" />
+
+    <ImageButton
+        android:id="@+id/pauseButton"
+        android:layout_width="103dp"
+        android:layout_height="75dp"
+        android:background="#C3ABC9"
+        android:contentDescription="@string/recordplaying_stop"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:text="@string/record_stop"
+        android:textColor="#f9f7f9"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.034"
+        app:srcCompat="@android:drawable/ic_media_pause" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

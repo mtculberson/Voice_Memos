@@ -6,14 +6,19 @@ import android.media.MediaRecorder;
 import android.os.Environment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -26,12 +31,17 @@ import android.content.pm.PackageManager;
 
 public class RecordingActivity extends AppCompatActivity {
 
-    Button buttonStart, buttonStop, buttonPlayLastRecordAudio,
-            buttonStopPlayingRecording ;
-    String AudioSavePathInDevice = null;
+    Boolean isReleased;
+    Button Start, Stop, NewRecording;
+    ImageButton PlayRecording, PauseRecording;
+    String AudioSavePathInDevice = null, Filename;
     MediaRecorder mediaRecorder ;
+    TextView songName, startTime;
+    SeekBar songPrgs;
     Random random ;
     String RandomAudioFileName = "ABCDEFGHIJKLMNOP";
+    private static int oTime =0, sTime =0, eTime =0, fTime = 5000, bTime = 5000;
+    private Handler hdlr = new Handler();
     public static final int RequestPermissionCode = 1;
     MediaPlayer mediaPlayer ;
 
@@ -40,26 +50,33 @@ public class RecordingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recording);
 
-        buttonStart = (Button) findViewById(R.id.button);
-        buttonStop = (Button) findViewById(R.id.button2);
-        buttonPlayLastRecordAudio = (Button) findViewById(R.id.button3);
-        buttonStopPlayingRecording = (Button)findViewById(R.id.button4);
-
-        buttonStop.setVisibility(View.INVISIBLE);
-        buttonPlayLastRecordAudio.setVisibility(View.INVISIBLE);
-        buttonStopPlayingRecording.setVisibility(View.INVISIBLE);
+        Start = (Button) findViewById(R.id.button);
+        Stop = (Button) findViewById(R.id.button2);
+        PlayRecording = (ImageButton) findViewById(R.id.playButton);
+        PauseRecording = (ImageButton)findViewById(R.id.pauseButton);
+        NewRecording = (Button)findViewById(R.id.newRecordingButton);
+        songName = (TextView)findViewById(R.id.txtSname);
+        startTime = (TextView)findViewById(R.id.txtStartTime);
+        songPrgs = (SeekBar)findViewById(R.id.sBar);
+        songPrgs.setClickable(false);
+        Stop.setVisibility(View.INVISIBLE);
+        NewRecording.setVisibility(View.INVISIBLE);
+        PlayRecording.setVisibility(View.INVISIBLE);
+        PauseRecording.setVisibility(View.INVISIBLE);
+        songName.setVisibility(View.INVISIBLE);
+        songPrgs.setVisibility(View.INVISIBLE);
+        startTime.setVisibility(View.INVISIBLE);
 
         random = new Random();
 
-        buttonStart.setOnClickListener(new View.OnClickListener() {
+        Start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if(checkPermission()) {
                     String path = getApplicationContext().getFilesDir().getAbsolutePath() + "/";
-
-                    AudioSavePathInDevice =
-                            path + CreateRandomAudioFileName(5) + "AudioRecording.3gp";
+                    Filename = CreateRandomAudioFileName(5) + "AudioRecording.mp3";
+                    AudioSavePathInDevice = path + Filename;
 
                     MediaRecorderReady();
 
@@ -74,8 +91,8 @@ public class RecordingActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    buttonStart.setVisibility(View.INVISIBLE);
-                    buttonStop.setVisibility(View.VISIBLE);
+                    Start.setVisibility(View.INVISIBLE);
+                    Stop.setVisibility(View.VISIBLE);
 
                     Toast.makeText(RecordingActivity.this, "Recording started",
                             Toast.LENGTH_LONG).show();
@@ -86,28 +103,30 @@ public class RecordingActivity extends AppCompatActivity {
             }
         });
 
-        buttonStop.setOnClickListener(new View.OnClickListener() {
+        Stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mediaRecorder.stop();
-                buttonStop.setVisibility(View.INVISIBLE);
-                buttonPlayLastRecordAudio.setVisibility(View.VISIBLE);
-                buttonStart.setVisibility(View.VISIBLE);
-                buttonStopPlayingRecording.setVisibility(View.INVISIBLE);
+                Stop.setVisibility(View.INVISIBLE);
+                PlayRecording.setVisibility(View.VISIBLE);
+                Start.setVisibility(View.INVISIBLE);
+                NewRecording.setVisibility(View.VISIBLE);
 
                 Toast.makeText(RecordingActivity.this, "Recording Completed",
                         Toast.LENGTH_LONG).show();
+
             }
         });
 
-        buttonPlayLastRecordAudio.setOnClickListener(new View.OnClickListener() {
+        PlayRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) throws IllegalArgumentException,
                     SecurityException, IllegalStateException {
 
-                buttonStop.setVisibility(View.INVISIBLE);
-                buttonStart.setVisibility(View.INVISIBLE);
-                buttonStopPlayingRecording.setVisibility(View.VISIBLE);
+                Stop.setVisibility(View.INVISIBLE);
+                Start.setVisibility(View.INVISIBLE);
+                PauseRecording.setVisibility(View.VISIBLE);
+                NewRecording.setVisibility(View.VISIBLE);
 
                 mediaPlayer = new MediaPlayer();
                 try {
@@ -116,6 +135,23 @@ public class RecordingActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                eTime = mediaPlayer.getDuration();
+                sTime = mediaPlayer.getCurrentPosition();
+                if(oTime == 0){
+                    songPrgs.setMax(eTime);
+                    oTime =1;
+                }
+
+                startTime.setText(String.format("%d min, %d sec", TimeUnit.MILLISECONDS.toMinutes(sTime),
+                        TimeUnit.MILLISECONDS.toSeconds(sTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS. toMinutes(sTime))) );
+                songPrgs.setProgress(sTime);
+                songName.setText(Filename);
+                hdlr.postDelayed(UpdateSongTime, 100);
+                isReleased = false;
+
+                songName.setVisibility(View.VISIBLE);
+                songPrgs.setVisibility(View.VISIBLE);
+                startTime.setVisibility(View.VISIBLE);
 
                 mediaPlayer.start();
                 Toast.makeText(RecordingActivity.this, "Recording Playing",
@@ -123,20 +159,41 @@ public class RecordingActivity extends AppCompatActivity {
             }
         });
 
-        buttonStopPlayingRecording.setOnClickListener(new View.OnClickListener() {
+        NewRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttonStop.setVisibility(View.INVISIBLE);
-                buttonStart.setVisibility(View.VISIBLE);
-                buttonStopPlayingRecording.setVisibility(View.INVISIBLE);
-                buttonPlayLastRecordAudio.setVisibility(View.INVISIBLE);
+                Stop.setVisibility(View.INVISIBLE);
+                Start.setVisibility(View.VISIBLE);
+                NewRecording.setVisibility(View.INVISIBLE);
+                PlayRecording.setVisibility(View.INVISIBLE);
+                PauseRecording.setVisibility(View.INVISIBLE);
+                songName.setVisibility(View.INVISIBLE);
+                songPrgs.setVisibility(View.INVISIBLE);
+                startTime.setVisibility(View.INVISIBLE);
+
+                isReleased = true;
 
                 if(mediaPlayer != null){
                     mediaPlayer.stop();
                     mediaPlayer.reset();
                     mediaPlayer.release();
+                    mediaPlayer = null;
+                    oTime = 0;
                     MediaRecorderReady();
                 }
+            }
+        });
+
+        PauseRecording.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Stop.setVisibility(View.INVISIBLE);
+                Start.setVisibility(View.INVISIBLE);
+                NewRecording.setVisibility(View.VISIBLE);
+                PlayRecording.setVisibility(View.VISIBLE);
+                PauseRecording.setVisibility(View.INVISIBLE);
+
+                mediaPlayer.pause();
             }
         });
 
@@ -197,4 +254,23 @@ public class RecordingActivity extends AppCompatActivity {
         return result == PackageManager.PERMISSION_GRANTED &&
                 result1 == PackageManager.PERMISSION_GRANTED;
     }
+
+    private Runnable UpdateSongTime = new Runnable() {
+        @Override
+        public void run() {
+            if (isReleased == true) {
+                return;
+            }
+            sTime = mediaPlayer.getCurrentPosition();
+            startTime.setText(String.format("%d min, %d sec", TimeUnit.MILLISECONDS.toMinutes(sTime),
+                    TimeUnit.MILLISECONDS.toSeconds(sTime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(sTime))) );
+            songPrgs.setProgress(sTime);
+
+            if (sTime == eTime) {
+                PlayRecording.setVisibility(View.VISIBLE);
+                PauseRecording.setVisibility(View.INVISIBLE);
+            }
+            hdlr.postDelayed(this, 100);
+        }
+    };
 }
