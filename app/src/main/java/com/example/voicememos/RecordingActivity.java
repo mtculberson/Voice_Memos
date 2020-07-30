@@ -1,5 +1,6 @@
 package com.example.voicememos;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 
@@ -49,6 +50,15 @@ public class RecordingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recording);
+
+        Button btn = (Button)findViewById(R.id.viewbutton);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RecordingActivity.this, ListFilesActivity.class));
+            }
+        });
 
         Start = (Button) findViewById(R.id.button);
         Stop = (Button) findViewById(R.id.button2);

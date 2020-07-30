@@ -8,4 +8,5 @@
     <string name="recordplaying_start">Start Playing Recording</string>
     <string name="recordplaying_stop">Stop Playing Recording</string>
     <string name="record_new">New Recording</string>
+    <string name="view_recordings">All Recordings</string>
 </resources>
